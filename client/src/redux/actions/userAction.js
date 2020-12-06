@@ -15,3 +15,8 @@ export const setCurrentUser = (json) => ({
     type: 'SET_CURRENT_USER',
     json
 });
+
+export const registerUser = (userData) => ({
+    type: 'REGISTER_USER',
+    userData
+});

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getNews } from '../../redux/actions/action';
+import { getNews } from '../../redux/actions/newsAction';
 
 const News = ({ getNews, article,}) => {
     return (

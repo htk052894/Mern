@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import API from "../../api/api";
 import { toast } from "react-toastify";
+import { connect } from 'react-redux';
+import {registerUser} from "../../redux/actions/userAction";
 
-function Register({ history }) {
+function Register({ 
+    history,
+    registerUser,
+    isRegistered,
+    registerError
+}) {
     const [userData, setUserData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if (isRegistered) {
+            toast.success("Register Success!!!")
+            history.push("/login");
+        }
+    }, [isRegistered,history]);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -34,26 +47,10 @@ function Register({ history }) {
 
     function handleSave(event) {
         event.preventDefault();
-        setUserData({ name: "", email: "", password: "", confirmPassword: "" });
+        // Once I remove the below line, then the form fields will be initiated with empty value.
+        // setUserData({ name: "", email: "", password: "", confirmPassword: "" });
         if (!formIsValid()) return;
-        API.registerUser(userData)
-            .then(() => {
-                toast.success("Register Success!!!")
-                history.push("/login");
-            })
-            .catch((err) => {
-                console.log(err.response);
-            })
-        // setSaving(true);
-        // saveCourse(course)
-        //     .then(() => {
-        //         toast.success("Course saved.");
-        //         history.push("/courses");
-        //     })
-        //     .catch(error => {
-        //         setSaving(false);
-        //         setErrors({ onSave: error.message });
-        //     });
+        registerUser(userData);
     }
 
     return (
@@ -113,8 +110,20 @@ function Register({ history }) {
                     Register
                 </Button>
             </Form>
+            {(registerError) ? (
+                    <p>{registerError}</p>
+                ) : (null)} 
         </div>
     )
 }
 
-export default Register;
+const mapDispatchToProps = {
+    registerUser: registerUser,
+};
+
+const mapStateToProps = (state) => ({
+    isRegistered: state.userReducer.isRegistered,
+    registerError: state.userReducer.registerError
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

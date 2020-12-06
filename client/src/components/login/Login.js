@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { loginUser } from "../../redux/actions/action";
+import { loginUser } from "../../redux/actions/userAction";
 
 const Login = ({ 
     history, 

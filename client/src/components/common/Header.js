@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import { logOutUser } from "../../redux/actions/action";
+import { logOutUser } from "../../redux/actions/userAction";
 import { Navbar, Nav } from 'react-bootstrap';
 import { NavLink } from "react-router-dom";
 

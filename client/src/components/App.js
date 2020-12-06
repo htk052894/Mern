@@ -13,7 +13,7 @@ import PrivateRoute from "./PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from 'react-redux';
-import { setCurrentUser, logOutUser } from "../redux/actions/action";
+import { setCurrentUser, logOutUser } from "../redux/actions/userAction";
 
 const App = ({
     setCurrentUser,

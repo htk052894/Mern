@@ -39,7 +39,30 @@ function* logOutUser(userData) {
     });
 }
 
+function* registerUser(userData) {
+    try {
+        const json = yield API.registerUser(userData.userData)
+            .then(() => {                
+                return ("registered");
+            })
+            .catch(err => {
+                throw err.response.data;
+            });
+        yield put({
+            type: "SET_REGISTER_USER",
+            json: json
+        });
+    }
+    catch (error) {
+        yield put({
+            type: 'SET_REGISETER_USER_FAILED',
+            error
+        })
+    }    
+}
+
 export default function* actionLoginUser() {
     yield takeLatest('LOGIN_USER', loginUser)
     yield takeLatest('LOGOUT_USER', logOutUser)
+    yield takeLatest('REGISTER_USER', registerUser)
 }
